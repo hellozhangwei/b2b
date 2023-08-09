@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- No copyright or license for configuration file, details here are not considered a creative work. -->
+<moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/moqui-conf-3.xsd">
+    <screen-facade>
+        <screen location="component://webroot/screen/webroot.xml">
+            <subscreens-item name="b2b" menu-include="false" location="component://b2b/screen/b2b.xml"/>
+        </screen>
+        <screen location="component://webroot/screen/webroot.xml">
+            <subscreens-item name="b2bstatic" menu-include="false" location="component://b2b/screen/b2bstatic.xml"/>
+        </screen>
+    </screen-facade>
+</moqui-conf>
