@@ -16,7 +16,7 @@
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">All<!--${productCategoryId}-->
+        <a class="nav-link" href="#">All
           <span class="sr-only">(current)</span>
         </a>
       </li>

@@ -15,6 +15,8 @@ along with this software (see the LICENSE.md file). If not, see
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         standalone="true" require-authentication="anonymous-view">
 
+    <macro-template type="html" location="component://b2b/template/screen-macro/B2bScreenMacros.html.ftl"/>
+
     <always-actions>
         <!-- TODO: set the productStoreId for this store here (some way to make this more dynamic?) -->
         <set field="productStoreId" value="POPC_DEFAULT"/>

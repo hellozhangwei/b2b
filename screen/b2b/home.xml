@@ -36,7 +36,8 @@ along with this software (see the LICENSE.md file). If not, see
                       in-map="[productCategoryId:browseRootCategoryId]"/>
 
         <set field="productCategoryId" from="pscList?.getAt(0)?.productCategoryId"/>
-        <entity-find entity-name="ProductCategoryMemberProduct" list="pcmpList" cache="true">
+        <entity-find entity-name="ProductCategoryMemberProduct" list="pcmpList">
+            <search-form-inputs/>
             <date-filter/><econdition field-name="productCategoryId" from="productCategoryId"/>
             <order-by field-name="sequenceNum"/><order-by field-name="productName"/>
         </entity-find>
@@ -63,7 +64,7 @@ along with this software (see the LICENSE.md file). If not, see
         </form-list>-->
         <container type="section" style="text-center mb-4">
             <container type="div" style="row wow fadeIn">
-                <section-iterate name="ProductListSection" list="pcmpList" entry="pcmp" paginate="true">
+                <section-iterate name="ProductListSection" list="pcmpList" entry="pcmp" paginate="false">
                     <actions>
                         <service-call name="mantle.product.PriceServices.get#ProductPrice" out-map="priceMapOut"
                                       in-map="[productId:pcmp.productId, priceUomId:priceUomId, productStoreId:productStoreId,
@@ -115,6 +116,8 @@ along with this software (see the LICENSE.md file). If not, see
                 </section-iterate>
             </container>
         </container>
+
+        <section-pagination listName="pcmpList"/>
 
 <!--        <render-mode><text type="html" location="component://b2b/screen/b2b/home.html.ftl"/></render-mode>-->
 
