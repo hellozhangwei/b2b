@@ -15,7 +15,44 @@ along with this software (see the LICENSE.md file). If not, see
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         standalone="true" require-authentication="anonymous-view">
 
+    <always-actions>
+        <!-- TODO: set the productStoreId for this store here (some way to make this more dynamic?) -->
+        <set field="productStoreId" value="POPC_DEFAULT"/>
+        <entity-find-one entity-name="mantle.product.store.ProductStore" value-field="productStore"/>
+        <set field="currencyUomId" from="productStore?.defaultCurrencyUomId"/>
+        <set field="priceUomId" from="productStore?.defaultCurrencyUomId"/>
+        <set field="defaultLocale" from="productStore?.defaultLocale"/>
+        <set field="organizationPartyId" from="productStore?.organizationPartyId"/>
+        <set field="vendorPartyId" from="productStore?.organizationPartyId"/>
+        <set field="wikiSpaceId" from="productStore?.wikiSpaceId"/>
+
+        <!-- some settings used when adding to cart, etc -->
+        <set field="cartOrderId" from="ec.web.sessionAttributes.cartOrderId" set-if-empty="false"/>
+        <entity-find entity-name="mantle.party.PartyRelationship" list="toRelList">
+            <econdition field-name="fromPartyId" from="ec.user.userAccount.partyId"/>
+            <date-filter/>
+        </entity-find>
+        <set field="customerPartyId" from="toRelList?.first?.toPartyId"/>
+        <!-- NOTE: if needed set additional parameters for creating an order here, for example: carrierPartyId:'_NA_', shipmentMethodEnumId:'ShMthGround' -->
+        <set field="defaultOrderParameters" from="[orderId:cartOrderId, customerPartyId:customerPartyId, currencyUomId:currencyUomId,
+                productStoreId:productStoreId, salesChannelEnumId:'ScWeb']"/>
+
+        <!-- <log message="cartOrderId=${cartOrderId}, customerPartyId=${customerPartyId}, vendorPartyId=${vendorPartyId}"/> -->
+    </always-actions>
+
     <subscreens default-item="home"/>
+
+    <pre-actions>
+        <service-call name="popstore.StoreServices.get#StoreInfo" in-map="[productStoreId:productStoreId]" out-map="storeInfo"/>
+        <set field="browseRootCategory" from="storeInfo.categoryByType.PsctBrowseRoot"/>
+        <set field="browseRootCategoryId" from="browseRootCategory?.productCategoryId"/>
+        <!-- get browseRootCategoryInfo for subCategoryList used in header, etc -->
+        <if condition="browseRootCategoryId">
+            <service-call name="popstore.ProductServices.get#CategoryInfo" out-map="browseRootCategoryInfo"
+                          in-map="[productCategoryId:browseRootCategoryId]"/>
+        </if>
+    </pre-actions>
+
 
     <widgets>
         <subscreens-active/>
