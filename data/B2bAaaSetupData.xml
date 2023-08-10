@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a 
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<entity-facade-xml type="seed-initial">
+
+    <moqui.security.ArtifactGroup artifactGroupId="B2B_APP" description="B2B App"/>
+    <moqui.security.ArtifactGroupMember artifactGroupId="B2B_APP" artifactTypeEnumId="AT_XML_SCREEN"
+                                        inheritAuthz="Y" artifactName="component://b2b/screen/b2b.xml"/>
+    <moqui.security.ArtifactAuthz artifactAuthzId="B2B_APP_ALL" userGroupId="ADMIN" artifactGroupId="B2B_APP"
+                                  authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+
+    <userGroups userGroupId="UG_B2B_BUYER" description="Organization Buyer">
+        <authz artifactAuthzId="AA_BUYER_B2B" artifactGroupId="B2B_APP"  authzTypeEnumId="AUTHZT_ALLOW" authzActionEnumId="AUTHZA_ALL"/>
+    </userGroups>
+
+</entity-facade-xml>
