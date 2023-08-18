@@ -14,6 +14,7 @@
   <link href="/b2bstatic/css/mdb.min.css" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="/b2bstatic/css/style.min.css" rel="stylesheet">
+  <link href="/b2bstatic/css/bootstrap-shopping-carts.min.css" rel="stylesheet">
   <style type="text/css">
     html,
     body,
