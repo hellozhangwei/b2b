@@ -81,9 +81,8 @@ along with this software (see the LICENSE.md file). If not, see
 
                                 <!--Card image-->
                                 <div class="view overlay">
-                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                                         alt="">
-                                    <a>
+                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" alt="">
+                                    <a href="/b2b/product/${pcmp.productId}">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
@@ -97,7 +96,7 @@ along with this software (see the LICENSE.md file). If not, see
                                     </a>
                                     <h5>
                                         <strong>
-                                            <a href="${pcmp.productId}" class="dark-grey-text text-truncate" style="display: block"> ${pcmp.productName}
+                                            <a href="/b2b/product/${pcmp.productId}" class="dark-grey-text text-truncate" style="display: block"> ${pcmp.productName}
                                             </a>
                                         </strong>
                                     </h5>
