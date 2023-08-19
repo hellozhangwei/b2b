@@ -161,9 +161,9 @@
               </li>
             </ul>
 
-            <button type="button" class="btn btn-primary btn-lg btn-block">
+            <a class="btn btn-primary btn-lg btn-block" href="/b2b/checkout">
               Go to checkout
-            </button>
+            </a>
           </div>
         </div>
       </div>
