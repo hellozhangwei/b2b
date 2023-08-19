@@ -53,7 +53,7 @@
 
     <!-- Brand -->
     <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-      <strong class="blue-text">MDB</strong>
+      <strong class="blue-text">MDB ${SHOW_CAROUSEL!''}</strong>
     </a>
 
     <!-- Collapse -->
@@ -118,6 +118,7 @@
 </nav>
 <!-- Navbar -->
 
+<#if (SHOW_CAROUSEL!'N') == 'Y'>
 <!--Carousel Wrapper-->
 <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
 
@@ -259,7 +260,7 @@
 
 </div>
 <!--/.Carousel Wrapper-->
-
+</#if>
 <!--Main layout-->
 <main>
   <div class="container">
