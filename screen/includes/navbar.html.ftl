@@ -21,7 +21,7 @@
         </a>
       </li>
       <#list browseRootCategoryInfo.subCategoryList as category>
-      <li class="nav-item <#if productCategoryId==category.productCategoryId>active</#if>">
+      <li class="nav-item <#if productCategoryId?? && productCategoryId==category.productCategoryId>active</#if>">
         <a class="nav-link" href="/b2b/home?productCategoryId=${category.productCategoryId}">${category.categoryName}</a>
       </li>
     </#list>
