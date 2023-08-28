@@ -16,10 +16,10 @@ along with this software (see the LICENSE.md file). If not, see
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         require-authentication="false" allow-extra-path="true">
 
+    <pre-actions>
+        <set field="SHOW_CATEGORY_NAV" value="Y"/>
+    </pre-actions>
     <widgets>
-
-
         <render-mode><text type="html" location="component://b2b/screen/b2b/product.html.ftl"/></render-mode>
-
     </widgets>
 </screen>

@@ -18,6 +18,7 @@ along with this software (see the LICENSE.md file). If not, see
 
     <pre-actions>
         <set field="SHOW_CAROUSEL" value="Y"/>
+        <set field="SHOW_CATEGORY_NAV" value="Y"/>
     </pre-actions>
 
     <transition name="addToCart">

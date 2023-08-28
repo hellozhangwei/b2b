@@ -262,5 +262,5 @@
 <!--/.Carousel Wrapper-->
 </#if>
 <!--Main layout-->
-<main>
+<main <#if (SHOW_CAROUSEL!'N') != 'Y'>class="mt-5 pt-4"</#if>>
   <div class="container">

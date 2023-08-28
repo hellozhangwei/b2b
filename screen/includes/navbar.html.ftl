@@ -1,3 +1,4 @@
+<#if (SHOW_CATEGORY_NAV!'N') == 'Y'>
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
 
@@ -48,3 +49,4 @@
 
 </nav>
 <!--/.Navbar-->
+</#if>
