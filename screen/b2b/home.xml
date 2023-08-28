@@ -16,11 +16,6 @@ along with this software (see the LICENSE.md file). If not, see
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         require-authentication="false">
 
-    <pre-actions>
-        <set field="SHOW_CAROUSEL" value="Y"/>
-        <set field="SHOW_CATEGORY_NAV" value="Y"/>
-    </pre-actions>
-
     <transition name="addToCart">
         <actions>
             <service-call name="mantle.order.OrderServices.add#OrderProductQuantity" out-map="addOut"
@@ -31,99 +26,38 @@ along with this software (see the LICENSE.md file). If not, see
         <error-response url="."/>
     </transition>
 
+    <pre-actions>
+        <set field="SHOW_CAROUSEL" value="Y"/>
+        <set field="SHOW_CATEGORY_NAV" value="Y"/>
+    </pre-actions>
+
     <actions>
-        <entity-find entity-name="ProductStoreCategory" list="pscList" cache="true">
+
+        <!-- Deals (Promotions) Category -->
+        <entity-find entity-name="mantle.product.store.ProductStoreCategory" list="promoPscList" cache="true">
             <date-filter/><econdition field-name="productStoreId"/>
-            <econdition field-name="storeCategoryTypeEnumId" value="PsctHomePage"/>
+            <econdition field-name="storeCategoryTypeEnumId" value="PsctPromotions"/>
         </entity-find>
+        <if condition="promoPscList">
+            <service-call name="popstore.ProductServices.get#CategoryProducts" out-map="promoCatProdOut"
+                          in-map="[productCategoryId:promoPscList[0].productCategoryId]"/>
+            <set field="promoProductList" from="promoCatProdOut.productList"/>
+        </if>
 
-        <service-call name="popstore.ProductServices.get#CategoryInfo" out-map="browseRootCategoryInfo"
-                      in-map="[productCategoryId:browseRootCategoryId]"/>
-
-        <set field="productCategoryId" from="productCategoryId?:pscList?.getAt(0)?.productCategoryId"/>
-        <entity-find entity-name="ProductCategoryMemberProduct" list="pcmpList">
-            <search-form-inputs/>
-            <date-filter/><econdition field-name="productCategoryId" from="productCategoryId"/>
-            <order-by field-name="sequenceNum"/><order-by field-name="productName"/>
+        <!-- Best Selling (Featured) Category -->
+        <entity-find entity-name="mantle.product.store.ProductStoreCategory" list="featPscList" cache="true">
+            <date-filter/><econdition field-name="productStoreId"/>
+            <econdition field-name="storeCategoryTypeEnumId" value="PsctFeatured"/>
         </entity-find>
+        <if condition="featPscList">
+            <service-call name="popstore.ProductServices.get#CategoryProducts" out-map="featCatProdOut"
+                          in-map="[productCategoryId:featPscList[0].productCategoryId]"/>
+            <set field="featureProductList" from="featCatProdOut.productList"/>
+        </if>
     </actions>
     <widgets>
-        <!-- <label text="POP Commerce Home Page" type="h1"/> -->
-        <!--<form-list name="HomeProductList" list="pcmpList" transition="addToCart">
-            <row-actions>
-                <service-call name="mantle.product.PriceServices.get#ProductPrice" out-map="priceMap"
-                        in-map="[productId:productId, priceUomId:priceUomId, productStoreId:productStoreId,
-                                vendorPartyId:vendorPartyId, customerPartyId:customerPartyId]"/>
-                <set field="price" from="priceMap?.price"/>
-                <set field="priceUomId" from="priceMap?.priceUomId"/>
-            </row-actions>
-            
-            <field name="productId"><default-field><hidden/></default-field></field>
-            <field name="productName"><default-field title="">
-                <link text="${productName}" url="/popc/Product/Detail/${productId}/${productName?.replace(' ', '-')}"
-                        url-noparam="true" link-type="anchor"/>
-            </default-field></field>
-            <field name="price"><default-field title=""><display also-hidden="false" currency-unit-field="priceUomId"/></default-field></field>
-            <field name="quantity"><default-field title=""><text-line size="2" default-value="1"/></default-field></field>
-            <field name="add"><default-field title="Add to Cart"><submit/></default-field></field>
-        </form-list>-->
-        <container type="section" style="text-center mb-4">
-            <container type="div" style="row wow fadeIn">
-                <section-iterate name="ProductListSection" list="pcmpList" entry="pcmp" paginate="false">
-                    <actions>
-                        <service-call name="mantle.product.PriceServices.get#ProductPrice" out-map="priceMapOut"
-                                      in-map="[productId:pcmp.productId, priceUomId:priceUomId, productStoreId:productStoreId,
-                                vendorPartyId:vendorPartyId, customerPartyId:customerPartyId]"/>
-                        <set field="price" from="priceMap?.price"/>
-                        <set field="priceUomId" from="priceMap?.priceUomId"/>
 
-                    </actions>
-                    <widgets><render-mode><text type="html"><![CDATA[
-                        <!--Grid column-->
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <!--Card-->
-                            <div class="card">
-
-                                <!--Card image-->
-                                <div class="view overlay">
-                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" alt="">
-                                    <a href="/b2b/product/${pcmp.productId}">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <!--Card image-->
-
-                                <!--Card content-->
-                                <div class="card-body text-center">
-                                    <!--Category & Title-->
-                                    <a href="" class="grey-text">
-                                        <h5>Shirt</h5>
-                                    </a>
-                                    <h5>
-                                        <strong>
-                                            <a href="/b2b/product/${pcmp.productId}" class="dark-grey-text text-truncate" style="display: block"> ${pcmp.productName}
-                                            </a>
-                                        </strong>
-                                    </h5>
-
-                                    <h4 class="font-weight-bold blue-text">
-                                        <strong>${priceMapOut.price} $</strong>
-                                    </h4>
-
-                                </div>
-                                <!--Card content-->
-
-                            </div>
-                            <!--Card-->
-                        </div>
-                     ]]></text></render-mode></widgets>
-                </section-iterate>
-            </container>
-        </container>
-
-        <section-pagination listName="pcmpList"/>
-
-<!--        <render-mode><text type="html" location="component://b2b/screen/b2b/home.html.ftl"/></render-mode>-->
+        <render-mode><text type="html" location="component://b2b/screen/b2b/home.html.ftl"/></render-mode>
 
     </widgets>
 </screen>

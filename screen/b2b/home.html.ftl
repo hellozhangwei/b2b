@@ -1,95 +1,43 @@
+<section>
+  <div class="text-center container">
+    <h4 class="mt-4 mb-5"><strong>Best Selling</strong></h4>
 
-      <!--Section: Products v.3-->
-      <section class="text-center mb-4">
-        <div class="row wow fadeIn">
-          <#list pcmpList as pcmp>
-          <#assign productPriceOut = ec.service.sync().name("mantle.product.PriceServices.get#ProductPrice").parameter("productId", pcmp.productId).call()>
-          <!--todo in-map=[productId:productId, priceUomId:priceUomId, productStoreId:productStoreId, vendorPartyId:vendorPartyId, customerPartyId:customerPartyId]-->
-
-          <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4">
-            <!--Card-->
-            <div class="card">
-
-              <!--Card image-->
-              <div class="view overlay">
-                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                     alt="">
-                <a>
-                  <div class="mask rgba-white-slight"></div>
-                </a>
+    <div class="row">
+      <#list featureProductList as product>
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card">
+          <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+            <#if product.mediumImageInfo??>
+              <img width="90%" class="w-100" src="/store/content/productImage/${product.mediumImageInfo.productContentId}">
+            <#else>
+              <#if product.smallImageInfo??>
+                <img width="90%" class="w-100" src="/store/content/productImage/${product.smallImageInfo.productContentId}" >
+              </#if>
+            </#if>
+            <a href="/b2b/product/${product.productId}">
+              <div class="mask">
+                <div class="d-flex justify-content-start align-items-end h-100">
+                  <h5><span class="badge bg-primary ms-2">New</span></h5>
+                </div>
               </div>
-              <!--Card image-->
-
-              <!--Card content-->
-              <div class="card-body text-center">
-                <!--Category & Title-->
-                <a href="" class="grey-text">
-                  <h5>Shirt</h5>
-                </a>
-                <h5>
-                  <strong>
-                    <a href="${pcmp.productId}" class="dark-grey-text text-truncate" style="display: block"> ${pcmp.productName}
-                    </a>
-                  </strong>
-                </h5>
-
-                <h4 class="font-weight-bold blue-text">
-                  <strong>${productPriceOut.price} $</strong>
-                </h4>
-
+              <div class="hover-overlay">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
               </div>
-              <!--Card content-->
-
-            </div>
-            <!--Card-->
+            </a>
           </div>
-          </#list>
-
-
+          <div class="card-body">
+            <a href="" class="text-reset">
+              <h5 class="card-title mb-3">${product.productName}</h5>
+            </a>
+            <a href="" class="text-reset">
+              <p>Category</p>
+            </a>
+            <h6 class="mb-3">$${product.price}</h6>
+          </div>
         </div>
-        <!--Grid row-->
+      </div>
+      </#list>
+    </div>
 
-      </section>
-      <!--Section: Products v.3-->
-
-      <!--Pagination-->
-      <nav class="d-flex justify-content-center wow fadeIn">
-        <ul class="pagination pg-blue">
-
-          <!--Arrow left-->
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-
-          <li class="page-item active">
-            <a class="page-link" href="#">1
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">3</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">4</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">5</a>
-          </li>
-
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!--Pagination-->
-
+  </div>
+</section>

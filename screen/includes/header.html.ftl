@@ -52,8 +52,8 @@
   <div class="container">
 
     <!-- Brand -->
-    <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-      <strong class="blue-text">MDB ${SHOW_CAROUSEL!''}</strong>
+    <a class="navbar-brand waves-effect" href="/b2b">
+      <strong class="blue-text">Customer Portal</strong>
     </a>
 
     <!-- Collapse -->
@@ -68,7 +68,7 @@
       <!-- Left -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link waves-effect" href="#">Home
+          <a class="nav-link waves-effect" href="/b2b">Home
             <span class="sr-only">(current)</span>
           </a>
         </li>

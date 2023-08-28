@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a 
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
+        require-authentication="false">
+
+
+    <transition name="addToCart">
+        <actions>
+            <service-call name="mantle.order.OrderServices.add#OrderProductQuantity" out-map="addOut"
+                    in-map="defaultOrderParameters + [productId:productId, quantity:quantity]"/>
+            <set field="ec.web.sessionAttributes.cartOrderId" from="addOut.orderId"/>
+        </actions>
+        <default-response url="../Order/Cart"/>
+        <error-response url="."/>
+    </transition>
+
+    <pre-actions>
+        <set field="SHOW_CATEGORY_NAV" value="Y"/>
+    </pre-actions>
+
+    <actions>
+
+        <entity-find entity-name="ProductStoreCategory" list="pscList" cache="true">
+            <date-filter/><econdition field-name="productStoreId"/>
+            <econdition field-name="storeCategoryTypeEnumId" value="PsctHomePage"/>
+        </entity-find>
+
+        <set field="productCategoryId" from="productCategoryId?:pscList?.getAt(0)?.productCategoryId"/>
+
+
+        <service-call name="popstore.ProductServices.get#CategoryProducts" out-map="context"
+                      in-map="[productCategoryId:productCategoryId, orderBy: orderBy, pageIndex:pageIndex ? pageIndex : '0']"/><!--, pageSize:2-->
+
+    </actions>
+    <widgets>
+        <container type="section" style="text-center mb-4">
+            <container type="div" style="row wow fadeIn">
+                <section-iterate name="ProductListSection" list="productList" entry="product" paginate="false">
+
+                    <widgets><render-mode><text type="html"><![CDATA[
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <!--Card-->
+                            <div class="card">
+
+                                <!--Card image-->
+                                <div class="view overlay">
+                                    <#if product.mediumImageInfo??>
+                                      <img class="card-img-top" src="/store/content/productImage/${product.mediumImageInfo.productContentId}">
+                                    <#elseif product.smallImageInfo??>
+
+                                      <img class="card-img-top" src="/store/content/productImage/${product.smallImageInfo.productContentId}" >
+                                    <#else>
+                                      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" alt="">
+                                    </#if>
+
+                                    <a href="/b2b/product/${product.productId}">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <!--Card image-->
+
+                                <!--Card content-->
+                                <div class="card-body text-center">
+                                    <!--Category & Title-->
+                                    <a href="" class="grey-text">
+                                        <h5>Shirt</h5>
+                                    </a>
+                                    <h5>
+                                        <strong>
+                                            <a href="/b2b/product/${product.productId}" class="dark-grey-text text-truncate" style="display: block"> ${product.productName}
+                                            </a>
+                                        </strong>
+                                    </h5>
+
+                                    <h4 class="font-weight-bold blue-text">
+                                        <strong>$ ${product.price}</strong>
+                                    </h4>
+
+                                </div>
+                                <!--Card content-->
+
+                            </div>
+                            <!--Card-->
+                        </div>
+                     ]]></text></render-mode></widgets>
+                </section-iterate>
+            </container>
+        </container>
+
+        <section-pagination listName="productList"/>
+
+<!--        <render-mode><text type="html" location="component://b2b/screen/b2b/home.html.ftl"/></render-mode>-->
+
+    </widgets>
+</screen>
