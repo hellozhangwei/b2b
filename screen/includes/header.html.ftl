@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Material Design Bootstrap</title>
+<!--  <title>Material Design Bootstrap</title>-->
+  <title><#if html_title?has_content>${html_title}</#if></title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -95,19 +96,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded waves-effect"
-             target="_blank">
-            <i class="fab fa-github mr-2"></i>MDB GitHub
+          <a href="my-account" class="nav-link border border-light rounded waves-effect">
+            <i class="far fa-user mr-2"></i>${ec.user.userAccount.userFullName}
           </a>
         </li>
       </ul>
