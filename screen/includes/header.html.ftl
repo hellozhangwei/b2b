@@ -97,7 +97,7 @@
         </li>
         <li class="nav-item">
           <a href="my-account" class="nav-link border border-light rounded waves-effect">
-            <i class="far fa-user mr-2"></i>${ec.user.userAccount.userFullName}
+            <i class="far fa-user mr-2"></i>${ec.user.userAccount.userFullName}(${parentOrg.organizationName!})
           </a>
         </li>
       </ul>

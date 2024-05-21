@@ -34,7 +34,11 @@ along with this software (see the LICENSE.md file). If not, see
             <econdition field-name="fromPartyId" from="ec.user.userAccount.partyId"/>
             <date-filter/>
         </entity-find>
-        <set field="customerPartyId" from="toRelList?.first?.toPartyId"/>
+
+        <set field="parentOrgPartyId" from="toRelList?.first?.toPartyId"/>
+        <entity-find-one entity-name="Organization" value-field="parentOrg">
+            <field-map field-name="partyId" from="parentOrgPartyId"/>
+        </entity-find-one>
         <!-- NOTE: if needed set additional parameters for creating an order here, for example: carrierPartyId:'_NA_', shipmentMethodEnumId:'ShMthGround' -->
         <set field="defaultOrderParameters" from="[orderId:cartOrderId, customerPartyId:customerPartyId, currencyUomId:currencyUomId,
                 productStoreId:productStoreId, salesChannelEnumId:'ScWeb']"/>

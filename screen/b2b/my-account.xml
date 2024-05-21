@@ -19,14 +19,14 @@ along with this software (see the LICENSE.md file). If not, see
     <pre-actions><set field="html_title" value="My Account"/></pre-actions>
 
     <actions>
-        <set field="partyId" from="ec.user.userAccount.partyId"/>
+<!--        <set field="partyId" from="ec.user.userAccount.partyId"/>-->
     </actions>
     <widgets>
         <link url="." text="Request for Quotation"/>
         <link url="." text="Purchase Orders"/>
         <form-list name="OrderList" list="orderList" header-dialog="false" >
             <entity-find entity-name="mantle.order.OrderPartFindView" list="orderList">
-                <econdition field-name="vendorPartyId" from="partyId"/>
+                <econdition field-name="vendorPartyId" from="parentOrgPartyId"/>
                 <select-field field-name="orderPartSeqId"/>
             </entity-find>
             <field name="orderId">
